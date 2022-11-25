@@ -39,29 +39,33 @@ class App extends Component {
 
   select = obj => {
     const no = Math.floor(Math.random() * (l - 1))
-    console.log(no)
     const {id} = obj
-    const randomId = choicesList[no].id
+
     const randomObj = choicesList[no]
+    const randomId = randomObj.id
     let status
     switch (true) {
-      case (id === 'PAPER' && randomId === 'SCISSOR') ||
-        (id === 'SCISSOR' && randomId === 'ROCK') ||
+      case (id === 'PAPER' && randomId === 'SCISSORS') ||
+        (id === 'SCISSORS' && randomId === 'ROCK') ||
         (id === 'ROCK' && randomId === 'PAPER'):
         status = 'lost'
         break
       case (id === 'PAPER' && randomId === 'ROCK') ||
-        (id === 'SCISSOR' && randomId === 'PAPER') ||
-        (id === 'ROCK' && randomId === 'SCISSOR'):
+        (id === 'SCISSORS' && randomId === 'PAPER') ||
+        (id === 'ROCK' && randomId === 'SCISSORS'):
         status = 'won'
         break
-      default:
+      case id === randomId:
         status = 'draw'
+        break
+      default:
+        status = 'nothing'
+        break
     }
 
     this.setState({
-      gameStatus: status,
       randomObj,
+      gameStatus: status,
       activeObj: obj,
       isGameOver: true,
     })
@@ -92,15 +96,17 @@ class App extends Component {
         text = 'YOU LOSE'
         break
       default:
-        text = 'ITS A DRAW'
+        text = 'IT IS DRAW'
+        break
     }
     return (
       <div>
+        <h1>Rock Paper Scissors</h1>
         <p>You</p>
-        <img src={url1} alt="me" />
+        <img src={url1} alt="your choice" />
         <p>Opponent</p>
-        <img src={url2} alt="oppo" />
-        <h1>{text}</h1>
+        <img src={url2} alt="opponent choice" />
+        <p>{text}</p>
         <button type="button" onClick={this.buttonClick}>
           Play Again
         </button>
@@ -123,10 +129,12 @@ class App extends Component {
         break
       default:
         score = 0
+        break
     }
     return (
       <>
         <div className="head-cont">
+          <h1>Rock Paper Scissors</h1>
           <div>
             <h1>ROCK</h1>
             <h1>PAPER</h1>

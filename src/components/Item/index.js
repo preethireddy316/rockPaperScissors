@@ -1,15 +1,18 @@
+/* eslint-disable react/no-unknown-property */
 const Item = props => {
   const {details, select} = props
-  const {imageUrl} = details
+  const {imageUrl, id} = details
   const selectId = () => {
     select(details)
   }
   return (
-    <li>
-      <button type="button" onClick={selectId}>
-        <img src={imageUrl} alt="image1" />
-      </button>
-    </li>
+    <button
+      data-testid={`${id.toLowerCase()}Button`}
+      type="button"
+      onClick={selectId}
+    >
+      <img src={imageUrl} alt={id} />
+    </button>
   )
 }
 
