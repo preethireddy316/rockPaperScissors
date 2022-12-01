@@ -1,12 +1,19 @@
 import {Component} from 'react'
 
 import Popup from 'reactjs-popup'
-
-import 'reactjs-popup/dist/index.css'
+import {RiCloseLine} from 'react-icons/ri'
 
 import './App.css'
 
 import Item from './components/Item'
+import {
+  Score,
+  Container,
+  Paragraph,
+  Image,
+  Button,
+  Heading,
+} from './styledComponents'
 
 const choicesList = [
   {
@@ -32,6 +39,7 @@ const initial = {
   randomObj: {},
   activeObj: {},
   isGameOver: false,
+  score: 0,
 }
 
 class App extends Component {
@@ -44,19 +52,23 @@ class App extends Component {
     const randomObj = choicesList[no]
     const randomId = randomObj.id
     let status
+    console.log(id, randomId)
     switch (true) {
       case (id === 'PAPER' && randomId === 'SCISSORS') ||
         (id === 'SCISSORS' && randomId === 'ROCK') ||
         (id === 'ROCK' && randomId === 'PAPER'):
         status = 'lost'
+        this.setState(prevState => ({score: prevState.score - 1}))
         break
       case (id === 'PAPER' && randomId === 'ROCK') ||
         (id === 'SCISSORS' && randomId === 'PAPER') ||
         (id === 'ROCK' && randomId === 'SCISSORS'):
         status = 'won'
+        this.setState(prevState => ({score: prevState.score + 1}))
         break
       case id === randomId:
         status = 'draw'
+        this.setState(prevState => ({score: prevState.score}))
         break
       default:
         status = 'nothing'
@@ -95,75 +107,64 @@ class App extends Component {
       case 'lost':
         text = 'YOU LOSE'
         break
-      default:
+      case 'draw':
         text = 'IT IS DRAW'
+        break
+      default:
+        text = ''
         break
     }
     return (
-      <div>
-        <h1>Rock Paper Scissors</h1>
-        <p>You</p>
-        <img src={url1} alt="your choice" />
-        <p>Opponent</p>
-        <img src={url2} alt="opponent choice" />
-        <p>{text}</p>
-        <button type="button" onClick={this.buttonClick}>
+      <Container>
+        <Paragraph>You</Paragraph>
+        <Image src={url1} alt="your choice" />
+        <Paragraph>Opponent</Paragraph>
+        <Image src={url2} alt="opponent choice" />
+        <Paragraph>{text}</Paragraph>
+        <Button type="button" onClick={this.buttonClick}>
           Play Again
-        </button>
-      </div>
+        </Button>
+      </Container>
     )
   }
 
   render() {
-    const {isGameOver, gameStatus} = this.state
-    let score
-    switch (gameStatus) {
-      case 'won':
-        score = 1
-        break
-      case 'lost':
-        score = -1
-        break
-      case 'draw':
-        score = 0
-        break
-      default:
-        score = 0
-        break
-    }
+    const {isGameOver, score} = this.state
     return (
       <>
-        <div className="head-cont">
-          <h1>Rock Paper Scissors</h1>
-          <div>
-            <h1>ROCK</h1>
-            <h1>PAPER</h1>
-            <h1>SCISSORS</h1>
-          </div>
-          <div>
-            <p>Score</p>
-            <p>{score}</p>
-          </div>
-        </div>
+        <Container className="head-cont">
+          <Heading>ROCK PAPER SCISSORS</Heading>
+          <Container>
+            <Paragraph className="score">Score</Paragraph>
+            <Score className="score">{score}</Score>
+          </Container>
+        </Container>
 
         {isGameOver ? this.resultView() : this.gameView()}
-        <div className="popup-container">
+        <Container className="popup-container">
           <Popup
             modal
             trigger={
-              <button type="button" className="trigger-button">
+              <Button type="button" className="trigger-button">
                 Rules
-              </button>
+              </Button>
             }
           >
-            <div>
-              <img
-                src="https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/rules-image.png"
-                alt="rules"
-              />
-            </div>
+            {close => (
+              <>
+                <Container>
+                  <Image
+                    src="https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/rules-image.png"
+                    alt="rules"
+                  />
+                </Container>
+                <Button type="button" onClick={() => close()}>
+                  <RiCloseLine />
+                </Button>
+              </>
+            )}
           </Popup>
-        </div>
+        </Container>
       </>
     )
   }
