@@ -14,6 +14,12 @@ export const Container = styled.div`
   color: #ffff;
 `
 
+export const Navbar = styled.nav`
+  font-family: 'Roboto';
+  background-color: #223a5f;
+  color: #ffff;
+`
+
 export const Button = styled.button`
   font-family: 'Roboto';
 `

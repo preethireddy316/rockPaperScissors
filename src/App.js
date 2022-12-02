@@ -8,6 +8,7 @@ import './App.css'
 import Item from './components/Item'
 import {
   Score,
+  Navbar,
   Container,
   Paragraph,
   Image,
@@ -132,13 +133,13 @@ class App extends Component {
     const {isGameOver, score} = this.state
     return (
       <>
-        <Container className="head-cont">
+        <Navbar className="head-cont">
           <Heading>ROCK PAPER SCISSORS</Heading>
           <Container>
             <Paragraph className="score">Score</Paragraph>
             <Score className="score">{score}</Score>
           </Container>
-        </Container>
+        </Navbar>
 
         {isGameOver ? this.resultView() : this.gameView()}
         <Container className="popup-container">
