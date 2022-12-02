@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {Component} from 'react'
 
 import Popup from 'reactjs-popup'
@@ -7,13 +8,13 @@ import './App.css'
 
 import Item from './components/Item'
 import {
-  Score,
   Navbar,
   Container,
   Paragraph,
   Image,
   Button,
   Heading,
+  Unordered,
 } from './styledComponents'
 
 const choicesList = [
@@ -84,16 +85,18 @@ class App extends Component {
     })
   }
 
-  buttonClick = () => {
-    this.setState(initial)
-  }
+  buttonClick = () =>
+    this.setState({gameStatus: '',randomObj: {},
+  activeObj: {},
+  isGameOver: false,
+})
 
   gameView = () => (
-    <ul>
+    <Unordered>
       {choicesList.map(each => (
         <Item key={each.id} select={this.select} details={each} />
       ))}
-    </ul>
+    </Unordered>
   )
 
   resultView = () => {
@@ -131,13 +134,14 @@ class App extends Component {
 
   render() {
     const {isGameOver, score} = this.state
+    console.log(score)
     return (
       <>
         <Navbar className="head-cont">
           <Heading>ROCK PAPER SCISSORS</Heading>
           <Container>
             <Paragraph className="score">Score</Paragraph>
-            <Score className="score">{score}</Score>
+            <Paragraph className="score">{score}</Paragraph>
           </Container>
         </Navbar>
 
