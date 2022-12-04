@@ -7,6 +7,7 @@ import {RiCloseLine} from 'react-icons/ri'
 import './App.css'
 
 import Item from './components/Item'
+
 import {
   Navbar,
   Container,
@@ -48,9 +49,9 @@ class App extends Component {
   state = initial
 
   select = obj => {
-    const no = Math.floor(Math.random() * (l - 1))
+    const no = Math.floor(Math.random() * l)
+    console.log(no)
     const {id} = obj
-
     const randomObj = choicesList[no]
     const randomId = randomObj.id
     let status

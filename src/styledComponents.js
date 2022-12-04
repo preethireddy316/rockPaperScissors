@@ -31,3 +31,6 @@ export const Image = styled.img`
 export const Heading = styled.h1`
   font-family: 'Roboto';
 `
+export const Unordered = styled.ul`
+  list-style-type: none;
+`
